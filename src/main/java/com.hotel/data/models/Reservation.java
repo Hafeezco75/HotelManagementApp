@@ -1,4 +1,4 @@
-package data.models;
+package com.hotel.data.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
