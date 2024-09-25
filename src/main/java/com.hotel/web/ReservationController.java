@@ -1,6 +1,6 @@
-package web;
+package com.hotel.web;
 
-import data.models.Reservation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +10,7 @@ import services.ReservationService;
 @RestController
 public class ReservationController {
 
-    @Autowired
+//    @Autowired
     private ReservationService reservationService;
 
 
