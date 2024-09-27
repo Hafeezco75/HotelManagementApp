@@ -10,6 +10,4 @@ public class Reservation {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long reservationId;
-
-
 }
