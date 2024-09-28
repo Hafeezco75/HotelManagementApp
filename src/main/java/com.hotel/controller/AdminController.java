@@ -1,5 +1,7 @@
 package com.hotel.controller;
 
+import com.hotel.Dto.ReservationDto;
+import com.hotel.data.models.Room;
 import com.hotel.data.models.User;
 import com.hotel.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,6 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private final RoomService roomService; // Service to manage rooms
-
-    @Autowired
-    private final ReservationService bookingService; // Service to manage bookings
-
-    @Autowired
-    private UserService userService;
-
-
-
-
     // Room Management services for admin
 
     @PostMapping("/add-room")
@@ -32,14 +22,14 @@ public class AdminController {
         return ResponseEntity.ok("Room added successfully!");
     }
 
-    @PutMapping("/update-room/{roomId}")
-    public ResponseEntity<String> updateRoom(@PathVariable Long roomId, @RequestBody Room room) {
+    @PutMapping("/update-room")
+    public ResponseEntity<String> updateRoom(@RequestBody Room room) {
         roomService.updateRoom(roomId, room);
         return ResponseEntity.ok("Room updated successfully!");
     }
 
-    @DeleteMapping("/delete-room/{roomId}")
-    public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
+    @DeleteMapping("/delete-room")
+    public ResponseEntity<String> deleteRoom(@RequestBody roomDto roomId) {
         roomService.deleteRoom(roomId);
         return ResponseEntity.ok("Room deleted successfully!");
     }
@@ -56,15 +46,15 @@ public class AdminController {
         return bookingService.getAllBookings();
     }
 
-    @GetMapping("/booking/{bookingId}")
+    @GetMapping("/booking")
     public ResponseEntity<Reservation> getBookingDetails(@PathVariable Long bookingId) {
         Reservation booking = bookingService.getBookingDetails(bookingId);
         return ResponseEntity.ok(booking);
     }
 
-    @DeleteMapping("/cancel-booking/{bookingId}")
-    public ResponseEntity<String> cancelBooking(@PathVariable Long bookingId) {
-        bookingService.cancelBooking(bookingId);
+    @DeleteMapping("/cancel-booking")
+    public ResponseEntity<String> cancelBooking(@RequestBody ReservationDto reservationDto) {
+        bookingService.cancelBooking(reservationDto);
         return ResponseEntity.ok("Booking canceled successfully!");
     }
 
@@ -74,14 +64,14 @@ public class AdminController {
         return userService.getAllGuests();
     }
 
-    @GetMapping("/guest/{guestId}")
-    public ResponseEntity<User> getGuestDetails(@PathVariable Long guestId) {
-        User guest = userService.getGuestById(guestId);
+    @GetMapping("/find-guest")
+    public ResponseEntity<User> getGuestDetails(@RequestBody GuestDto guestDto) {
+        User guest = userService.getGuestById(guestDto);
         return ResponseEntity.ok(guest);
     }
 
-    @DeleteMapping("/delete-guest/{guestId}")
-    public ResponseEntity<String> deleteGuest(@PathVariable Long guestId) {
+    @DeleteMapping("/delete-guest")
+    public ResponseEntity<String> deleteGuest(@RequestBody GuestDto guestDto) {
         userService.deleteGuest(guestId);
         return ResponseEntity.ok("Guest deleted successfully!");
     }

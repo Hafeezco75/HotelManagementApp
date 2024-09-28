@@ -1,12 +1,10 @@
 package com.hotel.controller;
 
-import com.hotel.Dto.LoginRequest;
 import com.hotel.Utils.JwtUtil;
 import com.hotel.data.models.User;
-import com.hotel.data.repository.UserRepository;
+import com.hotel.data.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserAuthenticationController {
     @Autowired
-    private UserRepository userRepository;
+    private GuestRepository userRepository;
 
     @Autowired
     private JwtUtil jwtUtil;

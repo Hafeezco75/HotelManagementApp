@@ -1,14 +1,13 @@
 package com.hotel.data.models;
 
 
+import com.hotel.data.Reservation.Reservation;
 import com.hotel.rolemodels.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -43,7 +42,7 @@ public class User implements UserDetails{
     private String role;
 
     @OneToMany
-    private List<data.models.Reservation> reservations = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
 
     @Override
