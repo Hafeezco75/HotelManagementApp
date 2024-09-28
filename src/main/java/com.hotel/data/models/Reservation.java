@@ -1,15 +1,21 @@
-package data.models;
+package com.hotel.data.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
 public class Reservation {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private long reservationId;
-
+    private Long reservationId;
+    private String reservationNumber;
+    private LocalDate reservationStartDate;
+    private LocalDate reservationEndDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rooms rooms;
 
 }
