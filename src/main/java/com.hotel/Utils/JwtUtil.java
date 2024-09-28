@@ -1,47 +1,49 @@
 package com.hotel.Utils;
 
+import com.hotel.data.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service
+@Component
 public class JwtUtil {
+    private final String secretKey = "2HDzI/sKz3Zgh8p6JTAw3qGKxbNPpAPrKvj3ePqpvEE="; // Change this to a secure key
+    private final long expirationTime = 1000 * 60 * 60; // 1 hour
 
-    private String secretKey = "your_secret_key"; // Use a secure key in production
-    private long validityInMilliseconds = 3600000; // 1 hour
-
-    // Generate JWT token
-    public String generateToken(String username) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
-
+    public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(now)
-                .setExpiration(validity)
+                .setSubject(user.getUsername())
+                .claim("role", user.getRole())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    // Validate JWT token
-    public boolean validateToken(String token, String username) {
-        Claims claims = getAllClaimsFromToken(token);
-        return (claims.getSubject().equals(username) && !claims.getExpiration().before(new Date()));
-    }
-
-    // Extract username from token
-    public String getUsername(String token) {
-        return getAllClaimsFromToken(token).getSubject();
-    }
-
-    // Get all claims from token
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims extractClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
-                .parseClaimsJws(token) // This should work if the dependency is correct
+                .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String extractUsername(String token) {
+        return extractClaims(token).getSubject();
+    }
+
+    public String extractRole(String token) {
+        return (String) extractClaims(token).get("role");
+    }
+
+    public boolean isTokenExpired(String token) {
+        return extractClaims(token).getExpiration().before(new Date());
+    }
+
+    public boolean validateToken(String token, String username) {
+        return (extractUsername(token).equals(username) && !isTokenExpired(token));
     }
 }

@@ -1,16 +1,14 @@
 package com.hotel.services;
 
-import com.hotel.data.models.User;
-import org.springframework.stereotype.Service;
+import com.hotel.data.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+public class UserService {
 
-@Service
-public interface UserService {
+    @Autowired
+    private UserRepository userRepository;
 
-    User registerUser(User user);
+    public void findGuest(){
 
-    User findByUsername(String username);
-
-    List<User> findAllUsers();
+    }
 }
