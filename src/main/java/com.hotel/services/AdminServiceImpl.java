@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public void updateRoom(Room room) {
+    public void updateRoom(Room roomdto) {
         roomRepository.findById(room.getId);
 //        Update then save
         roomRepository.save(room);
