@@ -1,5 +1,6 @@
 package com.hotel.services;
 
+import com.hotel.Dto.GuestDto;
 import com.hotel.Dto.ReservationDto;
 import com.hotel.data.Reservation.Reservation;
 import com.hotel.data.models.Guest;
@@ -16,4 +17,6 @@ public interface AdminService {
     Reservation getBookingDetails(ReservationDto reservationDto);
     void cancelBooking(ReservationDto reservationDto);
     List<Guest> getAllGuests();
+    void deleteRoom(Room roomId);
+    void deleteGuest(GuestDto guestDto);
 }
